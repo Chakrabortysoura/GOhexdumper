@@ -10,6 +10,9 @@ jobs:
     - name: Fetch the Code
       uses: actions/checkout@v3
 
+    - name: To check the current directory
+      run: ls
+
     - name: Set up the Go environment 
       uses: actions/setup-go@v5.5.0
       with: 
