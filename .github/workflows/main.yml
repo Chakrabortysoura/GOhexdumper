@@ -31,3 +31,4 @@ jobs:
           artifacts: "hexDumper"
           bodyFile: "Release.txt"
           tag: ${{ github.ref_name }} ##This is used to define the release name
+          allowUpdates: 'true'
