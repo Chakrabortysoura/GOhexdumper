@@ -23,24 +23,9 @@ jobs:
       - name: Build the Final Binary
         run: go build hexDumper.go
 
-      - name: Create a Release
+      - name: Create a Release and upload the go binary to the Release
         id: create-release
-        uses: actions/create-release@v1.1.4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: ncipollo/release-action@v1.16.0
         with:
-          tag_name: ${{ github.ref }}
-          release_name: v${{ github.ref }}
-          draft: false
-          prerelease: false
-          body_path: Release.txt
-
-      - name: Upload the assessts with the Release
-        uses: actions/upload-release-asset@v1.0.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: hexDumper
-          asset_name: Linux Binary
-          asset_content_type: applications/zip
+          artifacts: "hexDumper"
+          bodyFile: "Release.txt"
