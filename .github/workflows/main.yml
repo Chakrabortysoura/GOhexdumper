@@ -29,4 +29,4 @@ jobs:
         with:
           artifacts: "hexDumper"
           bodyFile: "Release.txt"
-          name: ${{ github.ref_name }}
+          tag: ${{ github.ref_name }}
