@@ -30,4 +30,4 @@ jobs:
         with:
           artifacts: "hexDumper"
           bodyFile: "Release.txt"
-          tag: ${{ github.ref }} ##This is used to define the release name
+          tag: ${{ github.ref_name }} ##This is used to define the release name
