@@ -1,27 +1,46 @@
-name: Workflow to build the go binary 
+name: Workflow to build the go binary
 run-name: Building the Go binary
-on: 
-  push: 
+on:
+  push:
+    tags:
+      - 'v*'
     branches: [main]
-jobs: 
-  Build: 
+jobs:
+  build:
     runs-on: ubuntu-latest ## the Linux env being used to compile the binary
-    steps: 
-    - name: Fetch the Code
-      uses: actions/checkout@v3
+    steps:
+      - name: Fetch the Code
+        uses: actions/checkout@v3
 
-    - name: Set up the Go environment 
-      uses: actions/setup-go@v5.5.0
-      with: 
-        go-version-file: go.mod
+      - name: Set up the Go environment
+        uses: actions/setup-go@v5.5.0
+        with:
+          go-version-file: go.mod
 
-    - name: Installing dependencies
-      run: go mod download
+      - name: Installing dependencies
+        run: go mod download
 
-    - name: Build the Final Binary
-      run: go build hexDumper.go
+      - name: Build the Final Binary
+        run: go build hexDumper.go
 
-    - name: Upload the packaged Binary
-      uses: actions/upload-artifact@v4.6.2
-      with: 
-        path: hexDumper
+      - name: Create a Release
+        id: create-release
+        uses: actions/create-release@v1.1.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: v${{ github.ref }}
+          draft: false
+          prerelease: false
+          body_path: Release.txt
+
+      - name: Upload the assessts with the Release
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: hexDumper
+          asset_name: Linux Binary
+          asset_content_type: applications/zip
