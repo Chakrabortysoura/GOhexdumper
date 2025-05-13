@@ -46,7 +46,7 @@ func CanonicalHexValuePrinter(data []byte) string {
 }
 func AsciiPrint(data []byte) string {
 	//Printing every 16 byte data in ascii format
-	result := " |"
+	var result string
 	for _, v := range data {
 		if 32 <= int(v) && int(v) <= 126 {
 			result += fmt.Sprintf("%c", v)
@@ -54,6 +54,5 @@ func AsciiPrint(data []byte) string {
 			result += fmt.Sprint(".")
 		}
 	}
-	result += "| "
 	return result
 }
