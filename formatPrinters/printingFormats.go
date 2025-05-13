@@ -5,53 +5,55 @@ import (
 	"slices"
 )
 
-func HexValuePrinter(lineNumber int, data []byte) {
+func HexValuePrinter(data []byte) string {
 	//Printing the hex values in every two bytes in reverse order
 	if len(data)%2 != 0 {
 		data = append(data, slices.Repeat([]byte{0}, 1)...)
 	}
-	fmt.Printf("%06x  ", lineNumber)
+	var result string
 	for i := 0; i < len(data); i++ {
 		if i > 0 && i%2 != 0 {
-			fmt.Printf("%02x%02x ", data[i], data[i-1])
+			result += fmt.Sprintf("%02x%02x ", data[i], data[i-1])
 		}
 	}
-	fmt.Println()
+	return result
 }
-func DecimalValuePrinter(lineNumber int, data []byte) {
+func DecimalValuePrinter(data []byte) string {
 	//Printing every two bit data in decimal format
 	if len(data)%2 != 0 {
 		data = append(data, slices.Repeat([]byte{0}, 1)...)
 	}
-	fmt.Printf("%06x  ", lineNumber)
+	var result string
 	for i := 0; i < len(data); i += 2 {
 		if i > 0 {
-			fmt.Printf("%d%d  ", data[i-2], data[i-1])
+			result += fmt.Sprintf("%d%d  ", data[i-2], data[i-1])
 		}
 	}
-	fmt.Println()
+	return result
 }
-func CanonicalHexValuePrinter(lineNumber int, data []byte) {
+func CanonicalHexValuePrinter(data []byte) string {
 	//Printing the contents in hex format with their ascii representation
 	if len(data)%2 != 0 {
 		data = append(data, slices.Repeat([]byte{0}, 1)...)
 	}
-	fmt.Printf("%06x  ", lineNumber)
+	var result string
 	for i := 0; i < len(data); i++ {
 		if i > 0 && i%2 != 0 {
-			fmt.Printf("%02x%02x ", data[i-1], data[i])
+			result += fmt.Sprintf("%02x%02x ", data[i-1], data[i])
 		}
 	}
+	return result
 }
-func AsciiPrint(data []byte) {
+func AsciiPrint(data []byte) string {
 	//Printing every 16 byte data in ascii format
-	fmt.Print(" |")
+	result := " |"
 	for _, v := range data {
 		if 32 <= int(v) && int(v) <= 126 {
-			fmt.Printf("%c", v)
+			result += fmt.Sprintf("%c", v)
 		} else {
-			fmt.Print(".")
+			result += fmt.Sprint(".")
 		}
 	}
-	fmt.Println("| ")
+	result += "| "
+	return result
 }

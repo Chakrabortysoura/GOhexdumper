@@ -43,20 +43,21 @@ func main() {
 		}
 	}(file)
 	var data = make([]byte, 16)
+	var result [][]string
+	var columns = []string{"Offset", "Data", "AsciiRepresentation"}
 	for lenOffSet := startOffset; lenOffSet < length; {
 		n, err := file.ReadAt(data, int64(lenOffSet))
 		if n+lenOffSet > length { // Check if the total bits read from the file will go over the total length
 			n = length - lenOffSet
 		}
 		if slices.Contains(options, "c") {
-			pf.CanonicalHexValuePrinter(lenOffSet, data[:n])
-			pf.AsciiPrint(data[:n])
+			result = append(result, []string{fmt.Sprintf("%06x", lenOffSet), pf.CanonicalHexValuePrinter(data[:n]), pf.AsciiPrint(data[:n])})
 		}
 		if slices.Contains(options, "d") {
-			pf.DecimalValuePrinter(lenOffSet, data[:n])
+			result = append(result, []string{fmt.Sprintf("%06x", lenOffSet), pf.DecimalValuePrinter(data[:n])})
 		}
 		if len(options) == 0 {
-			pf.HexValuePrinter(lenOffSet, data[:n])
+			result = append(result, []string{fmt.Sprintf("%06x", lenOffSet), pf.HexValuePrinter(data[:n])})
 		}
 		if err != nil {
 			if !errors.Is(err, io.EOF) {
@@ -66,5 +67,6 @@ func main() {
 		}
 		lenOffSet += n
 	}
+	fmt.Println(pf.StylizedListPrinter(columns, result))
 
 }

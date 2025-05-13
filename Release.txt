@@ -1,1 +1,1 @@
-Initial version of the hexDumper utility. The initial version is usable. All the major functionalities are complete.
+All the bubble tea lipgloss styling is added along with the utility.
