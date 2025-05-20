@@ -5,6 +5,19 @@ import (
 	"slices"
 )
 
+func OctalValuePrinter(data []byte) string {
+	//Printing the hex values in every two bytes in reverse order
+	if len(data)%2 != 0 {
+		data = append(data, slices.Repeat([]byte{0}, 1)...)
+	}
+	var result string
+	for i := 0; i < len(data); i++ {
+		if i > 0 && i%2 != 0 {
+			result += fmt.Sprintf("%02o%02o ", data[i], data[i-1])
+		}
+	}
+	return result
+}
 func HexValuePrinter(data []byte) string {
 	//Printing the hex values in every two bytes in reverse order
 	if len(data)%2 != 0 {

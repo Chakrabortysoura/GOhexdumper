@@ -44,20 +44,27 @@ func main() {
 	}(file)
 	var data = make([]byte, 16)
 	var result [][]string
-	var columns = []string{"Offset", "Data", "AsciiRepresentation"}
+	var columns = []string{" Offset ", " Data "}
+	if slices.Contains(options, "c") {
+		columns = append(columns, " AsciiRepresentation ")
+	}
 	for lenOffSet := startOffset; lenOffSet < length; {
 		n, err := file.ReadAt(data, int64(lenOffSet))
 		if n+lenOffSet > length { // Check if the total bits read from the file will go over the total length
 			n = length - lenOffSet
 		}
-		if slices.Contains(options, "c") {
-			result = append(result, []string{fmt.Sprintf("%06x", lenOffSet), pf.CanonicalHexValuePrinter(data[:n]), pf.AsciiPrint(data[:n])})
-		}
-		if slices.Contains(options, "d") {
-			result = append(result, []string{fmt.Sprintf("%06x", lenOffSet), pf.DecimalValuePrinter(data[:n])})
-		}
 		if len(options) == 0 {
 			result = append(result, []string{fmt.Sprintf("%06x", lenOffSet), pf.HexValuePrinter(data[:n])})
+		} else {
+			if slices.Contains(options, "c") {
+				result = append(result, []string{fmt.Sprintf("%06x", lenOffSet), pf.CanonicalHexValuePrinter(data[:n]), pf.AsciiPrint(data[:n])})
+			}
+			if slices.Contains(options, "d") {
+				result = append(result, []string{fmt.Sprintf("%06x", lenOffSet), pf.DecimalValuePrinter(data[:n])})
+			}
+			if slices.Contains(options, "o") {
+				result = append(result, []string{fmt.Sprintf("%06x", lenOffSet), pf.OctalValuePrinter(data[:n])})
+			}
 		}
 		if err != nil {
 			if !errors.Is(err, io.EOF) {
@@ -68,5 +75,4 @@ func main() {
 		lenOffSet += n
 	}
 	fmt.Println(pf.StylizedListPrinter(columns, result))
-
 }
