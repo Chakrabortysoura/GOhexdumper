@@ -48,6 +48,7 @@ func main() {
 	if slices.Contains(options, "c") {
 		columns = append(columns, " AsciiRepresentation ")
 	}
+	var rowColor []string
 	for lenOffSet := startOffset; lenOffSet < length; {
 		n, err := file.ReadAt(data, int64(lenOffSet))
 		if n+lenOffSet > length { // Check if the total bits read from the file will go over the total length
@@ -57,12 +58,15 @@ func main() {
 			result = append(result, []string{fmt.Sprintf("%06x", lenOffSet), pf.HexValuePrinter(data[:n])})
 		} else {
 			if slices.Contains(options, "c") {
+				rowColor = append(rowColor, "#f0805d")
 				result = append(result, []string{fmt.Sprintf("%06x", lenOffSet), pf.CanonicalHexValuePrinter(data[:n]), pf.AsciiPrint(data[:n])})
 			}
 			if slices.Contains(options, "d") {
+				rowColor = append(rowColor, "#b3d69c")
 				result = append(result, []string{fmt.Sprintf("%06x", lenOffSet), pf.DecimalValuePrinter(data[:n])})
 			}
 			if slices.Contains(options, "o") {
+				rowColor = append(rowColor, "#9cc1d6")
 				result = append(result, []string{fmt.Sprintf("%06x", lenOffSet), pf.OctalValuePrinter(data[:n])})
 			}
 		}
@@ -74,5 +78,5 @@ func main() {
 		}
 		lenOffSet += n
 	}
-	fmt.Println(pf.StylizedListPrinter(columns, result))
+	fmt.Println(pf.StylizedListPrinter(columns, result, rowColor))
 }

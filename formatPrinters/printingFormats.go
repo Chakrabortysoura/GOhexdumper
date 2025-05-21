@@ -13,7 +13,7 @@ func OctalValuePrinter(data []byte) string {
 	var result string
 	for i := 0; i < len(data); i++ {
 		if i > 0 && i%2 != 0 {
-			result += fmt.Sprintf("%02o%02o ", data[i], data[i-1])
+			result += fmt.Sprintf("%06o ", uint16(data[i])<<8|uint16(data[i-1]))
 		}
 	}
 	return result
@@ -39,7 +39,7 @@ func DecimalValuePrinter(data []byte) string {
 	var result string
 	for i := 0; i < len(data); i += 2 {
 		if i > 0 {
-			result += fmt.Sprintf("%d%d  ", data[i-2], data[i-1])
+			result += fmt.Sprintf("%05d ", uint16(data[i-2])<<8|uint16(data[i-1]))
 		}
 	}
 	return result
