@@ -14,7 +14,8 @@ a. Hexadecimal b. Decimal c. Binary d. Hexadecimal in Canonical form
 
 ## Demo
 
-![Screenshot_20250610_220400.png](../../../Pictures/Screenshots/Screenshot_20250610_220400.png)
+s![Screenshot_20250610_220400](https://github.com/user-attachments/assets/6aaeffa8-28aa-4f75-b9c5-266e13a83d7e)
+
 
 This is a testcase use shown in the above image to demonstrate different color coding for various data formats.
 
