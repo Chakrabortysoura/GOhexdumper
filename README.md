@@ -60,3 +60,6 @@ This is a testcase use shown in the above image to demonstrate different color c
 ```http
   -s [int]
 ```
+## Be sure to Checkout 
+
+ - [Lipgloss](https://pkg.go.dev/github.com/charmbracelet/lipgloss)
