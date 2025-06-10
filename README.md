@@ -5,7 +5,7 @@ A hexDumper written in GO with a modern look made with the help of lipgloss styl
 
 Supports all the basic features of the major fetures of the hexDumper utility in most linux systems but with a modern nicer look. Improvments in how the utility represents when displaying the same data in various different representation such as -
 
-a. Hexadecimal b. Decimal c. Binary d. Hexadecimal in Canonical form
+a. Hexadecimal b. Decimal c. Hexadecimal in Canonical form(Big-endian form representation)
 
 (Also support for length and offset parameter)
 
