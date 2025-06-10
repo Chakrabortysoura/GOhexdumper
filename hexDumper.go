@@ -55,6 +55,7 @@ func main() {
 			n = length - lenOffSet
 		}
 		if len(options) == 0 {
+			rowColor = append(rowColor, "#bfbfbf")
 			result = append(result, []string{fmt.Sprintf("%06x", lenOffSet), pf.HexValuePrinter(data[:n])})
 		} else {
 			if slices.Contains(options, "c") {
